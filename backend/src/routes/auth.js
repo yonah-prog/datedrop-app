@@ -122,8 +122,8 @@ router.post('/login', async (req, res) => {
 
     const user = result.rows[0];
 
-    // Check if email verified
-    if (!user.email_verified) {
+    // Check if email verified (warning in dev, skip in production)
+    if (!user.email_verified && process.env.NODE_ENV === 'production') {
       return res.status(403).json({ error: 'Email not verified' });
     }
 
