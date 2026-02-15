@@ -4,7 +4,14 @@ import axios from 'axios'
 // Configure axios base URL for API calls
 const apiBaseURL = import.meta.env.REACT_APP_API_URL || 'http://localhost:5000'
 axios.defaults.baseURL = apiBaseURL
-console.log('API Base URL:', apiBaseURL)
+axios.defaults.headers.post['Content-Type'] = 'application/json'
+axios.defaults.timeout = 10000
+
+// Log configuration on app load
+console.log('🔧 API Configuration:')
+console.log('  Base URL:', apiBaseURL)
+console.log('  Environment:', import.meta.env.MODE)
+console.log('  REACT_APP_API_URL:', import.meta.env.REACT_APP_API_URL)
 
 export const AuthContext = createContext()
 
@@ -36,12 +43,19 @@ export function AuthProvider({ children }) {
   }
 
   const login = async (email, password) => {
-    const response = await axios.post('/api/auth/login', { email, password })
-    const { token } = response.data
-    localStorage.setItem('token', token)
-    setToken(token)
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-    await fetchUser()
+    try {
+      console.log('🔐 Login request:', { email })
+      const response = await axios.post('/api/auth/login', { email, password })
+      const { token } = response.data
+      console.log('✅ Login successful')
+      localStorage.setItem('token', token)
+      setToken(token)
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+      await fetchUser()
+    } catch (error) {
+      console.error('❌ Login error:', error.message, error.response?.data)
+      throw error
+    }
   }
 
   const logout = () => {

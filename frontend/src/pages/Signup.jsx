@@ -32,24 +32,39 @@ export default function Signup() {
     setLoading(true)
 
     try {
+      console.log('📋 Form Data:', formData)
+
       if (formData.password !== formData.confirmPassword) {
         setError('Passwords do not match')
         setLoading(false)
         return
       }
 
-      await signup(
+      if (!formData.terms_accepted) {
+        setError('You must accept the terms and conditions')
+        setLoading(false)
+        return
+      }
+
+      console.log('🚀 Submitting signup...')
+      const result = await signup(
         formData.email,
         formData.password,
         formData.full_name,
         formData.date_of_birth,
         formData.terms_accepted
       )
+      console.log('✅ Signup successful:', result)
 
       setSuccess('Account created! Check your email to verify your account.')
       setTimeout(() => navigate('/login'), 3000)
     } catch (err) {
-      console.error('Signup error:', err)
+      console.error('❌ Signup error:', {
+        message: err.message,
+        status: err.response?.status,
+        data: err.response?.data,
+        fullError: err
+      })
       const errorMessage = err.response?.data?.error || err.message || 'Signup failed'
       setError(errorMessage)
     } finally {

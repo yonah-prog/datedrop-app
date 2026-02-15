@@ -4,15 +4,32 @@ const { scheduleWeeklyMatching } = require('./jobs/weeklyMatching');
 
 const app = express();
 
-// Middleware
-app.use(express.json());
+// CORS middleware BEFORE body parser
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URL || 'http://localhost:3000');
+  const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://localhost:5173',
+    'https://datingapp3.vercel.app',
+    process.env.FRONTEND_URL
+  ].filter(Boolean);
+
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
+
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Credentials', 'true');
+
   if (req.method === 'OPTIONS') return res.sendStatus(200);
   next();
 });
+
+// Body parser middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
@@ -29,8 +46,9 @@ app.get('/health', (req, res) => {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Something went wrong' });
+  console.error('Error:', err.message);
+  console.error('Stack:', err.stack);
+  res.status(500).json({ error: err.message || 'Something went wrong' });
 });
 
 const PORT = process.env.PORT || 5000;
