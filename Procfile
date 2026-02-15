@@ -1,1 +1,1 @@
-web: cd backend && npm install && npm run migrate && node src/server.js
+web: cd backend && npm install && node src/server.js
