@@ -52,14 +52,21 @@ export function AuthProvider({ children }) {
   }
 
   const signup = async (email, password, full_name, date_of_birth, terms_accepted) => {
-    const response = await axios.post('/api/auth/signup', {
-      email,
-      password,
-      full_name,
-      date_of_birth,
-      terms_accepted,
-    })
-    return response.data
+    try {
+      console.log('Signup request to:', `${apiBaseURL}/api/auth/signup`)
+      const response = await axios.post('/api/auth/signup', {
+        email,
+        password,
+        full_name,
+        date_of_birth,
+        terms_accepted,
+      })
+      console.log('Signup response:', response.data)
+      return response.data
+    } catch (error) {
+      console.error('Signup API error:', error.message, error.response?.data)
+      throw error
+    }
   }
 
   const verifyEmail = async (verificationToken) => {

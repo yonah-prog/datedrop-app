@@ -49,7 +49,9 @@ export default function Signup() {
       setSuccess('Account created! Check your email to verify your account.')
       setTimeout(() => navigate('/login'), 3000)
     } catch (err) {
-      setError(err.response?.data?.error || 'Signup failed')
+      console.error('Signup error:', err)
+      const errorMessage = err.response?.data?.error || err.message || 'Signup failed'
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }
