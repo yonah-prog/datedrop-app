@@ -1,16 +1,29 @@
 const nodemailer = require('nodemailer');
 
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: process.env.EMAIL_PORT,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-});
+let transporter;
+
+// Only initialize email if credentials are configured
+if (process.env.EMAIL_HOST && process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
+  transporter = nodemailer.createTransport({
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT || 587,
+    secure: process.env.EMAIL_SECURE === 'true',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+} else {
+  console.warn('Email configuration not set. Email verification will be skipped.');
+}
 
 const sendVerificationEmail = async (email, token) => {
+  // Skip email sending if not configured
+  if (!transporter) {
+    console.log(`Email not configured. Skipping verification email for ${email}`);
+    return;
+  }
+
   const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${token}`;
 
   const mailOptions = {
@@ -31,7 +44,7 @@ const sendVerificationEmail = async (email, token) => {
     console.log(`Verification email sent to ${email}`);
   } catch (err) {
     console.error('Failed to send email:', err);
-    throw err;
+    // Don't throw - allow signup to complete even if email fails
   }
 };
 
