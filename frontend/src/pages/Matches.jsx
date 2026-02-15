@@ -124,7 +124,7 @@ export default function Matches() {
           <h2>No Matches Yet</h2>
           <p>
             {dropStatus?.nextDrop?.optedIn
-              ? 'You're opted in! Matches will appear after the next drop.'
+              ? "You're opted in! Matches will appear after the next drop."
               : 'Opt in to the weekly drop to start getting matched!'}
           </p>
         </div>
