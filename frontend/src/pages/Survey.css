@@ -1,0 +1,238 @@
+.survey-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 2rem 1rem;
+}
+
+.survey-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.survey-header h1 {
+  color: #333;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.survey-header p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.error-message {
+  background-color: #fee;
+  color: #c33;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #c33;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.survey-progress {
+  max-width: 800px;
+  margin: 0 auto 2rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  text-align: center;
+  color: #666;
+  font-weight: 600;
+}
+
+.section-tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+}
+
+.tab {
+  padding: 1rem 0.75rem;
+  border: 2px solid #ddd;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.tab:hover {
+  border-color: #667eea;
+}
+
+.tab.active {
+  border-color: #667eea;
+  background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+  font-weight: 600;
+}
+
+.tab.filled {
+  background-color: #f0f4ff;
+}
+
+.tab-number {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #667eea;
+}
+
+.tab.active .tab-number {
+  color: #764ba2;
+}
+
+.tab-title {
+  color: #333;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.tab-progress {
+  font-size: 0.75rem;
+  color: #999;
+  margin-top: 0.25rem;
+}
+
+.survey-content {
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+}
+
+.section-navigation {
+  max-width: 800px;
+  margin: 2rem auto 0;
+  padding: 1.5rem 1rem;
+  background: white;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.completed-badge {
+  background-color: #4caf50;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  background-color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  color: #333;
+}
+
+.nav-btn:hover:not(:disabled) {
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nav-btn.primary {
+  background-color: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+.nav-btn.primary:hover:not(:disabled) {
+  background-color: #764ba2;
+  border-color: #764ba2;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .survey-container {
+    padding: 1rem;
+  }
+
+  .survey-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .section-tabs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section-navigation {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .section-info {
+    justify-content: center;
+  }
+
+  .nav-buttons {
+    width: 100%;
+  }
+
+  .nav-btn {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .tab {
+    padding: 0.75rem;
+  }
+
+  .tab-title {
+    display: none;
+  }
+}
