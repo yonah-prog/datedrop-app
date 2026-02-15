@@ -2,7 +2,8 @@ import React, { createContext, useState, useEffect } from 'react'
 import axios from 'axios'
 
 // Configure axios base URL for API calls
-const apiBaseURL = import.meta.env.REACT_APP_API_URL || 'http://localhost:5000'
+// Vite uses VITE_ prefix for environment variables
+const apiBaseURL = import.meta.env.VITE_API_URL || 'https://datedrop-api-ca88611a20ca.herokuapp.com'
 axios.defaults.baseURL = apiBaseURL
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.timeout = 10000
@@ -11,7 +12,7 @@ axios.defaults.timeout = 10000
 console.log('🔧 API Configuration:')
 console.log('  Base URL:', apiBaseURL)
 console.log('  Environment:', import.meta.env.MODE)
-console.log('  REACT_APP_API_URL:', import.meta.env.REACT_APP_API_URL)
+console.log('  VITE_API_URL env var:', import.meta.env.VITE_API_URL)
 
 export const AuthContext = createContext()
 
