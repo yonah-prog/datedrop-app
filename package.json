@@ -6,8 +6,7 @@
   "scripts": {
     "install-all": "cd backend && npm install && cd ../frontend && npm install",
     "dev": "echo 'Use cd backend && npm run dev OR cd frontend && npm run dev'",
-    "build": "cd frontend && npm run build",
-    "start": "cd backend && npm install && node src/server.js"
+    "build": "cd frontend && npm run build"
   },
   "engines": {
     "node": "18.x"
